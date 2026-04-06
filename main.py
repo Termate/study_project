@@ -1,5 +1,4 @@
-
-from file_manager.cli import main
+from gui import run_gui
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    run_gui()
