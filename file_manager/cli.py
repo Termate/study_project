@@ -22,7 +22,8 @@ def build_parser() -> argparse.ArgumentParser:
 
     # COPY
     copy_parser = subparsers.add_parser("copy", help="Копировать файл")
-    copy_parser.add_argument("path", help="Путь к файлу")
+    copy_parser.add_argument("from_file", help="Исходный файл")
+    copy_parser.add_argument("to_file", help="Файл назначения")
 
     # DELETE
     delete_parser = subparsers.add_parser("delete", help="Удалить файл или папку")
@@ -59,7 +60,7 @@ def main(argv: list[str] | None = None) -> int:
 
     try:
         if args.command == "copy":
-            result = core.copy_file(args.path)
+            result = core.copy_file(args.from_file, args.to_file)
             print(f"Файл успешно скопирован: {result}")
 
         elif args.command == "delete":

@@ -4,12 +4,22 @@
 
 python3 main.py <command> [arguments]
 
-##Примеры команд
+## Примеры команд
 
 python3 main.py copy from_file to_file
-python3 main.py move from_path to_path
+
 python3 main.py delete path
-python3 main.py rename old_name new_name
-python3 main.py mkdir folder_name
-python3 main.py list path
-python3 main.py find filename path
+
+python3 main.py count directory
+
+python3 main.py find directory pattern
+
+python3 main.py add-date path
+
+python3 main.py add-date path --recursive
+
+python3 main.py analyse directory
+
+## Запуск тестов
+
+python3 -m unittest tests/test_project.py

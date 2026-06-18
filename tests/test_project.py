@@ -82,9 +82,10 @@ class TestCore(unittest.TestCase):
 class TestCLI(unittest.TestCase):
     def test_parse_copy_args(self):
         parser = build_parser()
-        args = parser.parse_args(["copy", "a.txt"])
+        args = parser.parse_args(["copy", "a.txt", "b.txt"])
         self.assertEqual(args.command, "copy")
-        self.assertEqual(args.path, "a.txt")
+        self.assertEqual(args.from_file, "a.txt")
+        self.assertEqual(args.to_file, "b.txt")
 
     def test_parse_delete_args(self):
         parser = build_parser()

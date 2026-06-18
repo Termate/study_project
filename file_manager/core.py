@@ -4,20 +4,21 @@ import re
 from datetime import datetime
 
 
-def copy_file(path: str) -> str:
+def copy_file(from_file: str, to_file: str | None = None) -> str:
+    if not os.path.isfile(from_file):
+        raise FileNotFoundError(f"Файл не найден: {from_file}")
 
-    if not os.path.isfile(path):
-        raise FileNotFoundError(f"Файл не найден: {path}")
+    if to_file is None:
+        to_file = os.path.join(
+            os.path.dirname(from_file),
+            f"copy_{os.path.basename(from_file)}"
+        )
 
-    new_name = f"copy_{os.path.basename(path)}"
-    dest_path = os.path.join(os.path.dirname(path), new_name)
-
-    shutil.copy2(path, dest_path)
-    return dest_path
+    shutil.copy2(from_file, to_file)
+    return to_file
 
 
 def delete_path(path: str) -> bool:
-
     if not os.path.exists(path):
         raise FileNotFoundError(f"Путь не найден: {path}")
 
@@ -30,7 +31,6 @@ def delete_path(path: str) -> bool:
 
 
 def count_files(directory: str) -> int:
-
     if not os.path.isdir(directory):
         raise NotADirectoryError(f"Это не папка: {directory}")
 
@@ -41,7 +41,6 @@ def count_files(directory: str) -> int:
 
 
 def find_files(directory: str, pattern: str) -> list[str]:
-
     if not os.path.isdir(directory):
         raise NotADirectoryError(f"Это не папка: {directory}")
 
@@ -57,7 +56,6 @@ def find_files(directory: str, pattern: str) -> list[str]:
 
 
 def add_creation_date(path: str, recursive: bool = False) -> list[str]:
-
     if not os.path.exists(path):
         raise FileNotFoundError(f"Путь не найден: {path}")
 
@@ -68,7 +66,6 @@ def add_creation_date(path: str, recursive: bool = False) -> list[str]:
         directory = os.path.dirname(file_path)
         name = os.path.basename(file_path)
 
-        # чтобы не добавлять дату повторно
         if name.startswith(date_str + "_"):
             return file_path
 
@@ -84,7 +81,6 @@ def add_creation_date(path: str, recursive: bool = False) -> list[str]:
         renamed.append(rename_file(path))
         return renamed
 
-    # path — папка
     if recursive:
         for root, _, files in os.walk(path):
             for file in files:
@@ -99,7 +95,6 @@ def add_creation_date(path: str, recursive: bool = False) -> list[str]:
 
 
 def analyse(directory: str) -> tuple[int, dict[str, int]]:
-
     if not os.path.isdir(directory):
         raise NotADirectoryError(f"Это не папка: {directory}")
 
